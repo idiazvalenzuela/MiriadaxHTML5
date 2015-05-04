@@ -1,0 +1,58 @@
+<!DOCTYPE html><html>
+<head><meta charset="UTF-8">
+<script type="text/javascript" src="zepto.min.js" > </script>
+
+<script type="text/javascript">
+$(function(){
+  $("#boton_for").on('click', function(){
+    var cadena = '';
+    var msg = '';
+    var acumulador, acabar;
+	for(acumulador = 0, acabar = false; !acabar; ){
+		cadena = prompt( msg + "Introduzca un numero:");
+		if(cadena === 'acabar'){
+			acabar = true;
+		}else if(isNaN(cadena)){
+			msg = "Valor incorrecto, pruebe otra vez \n";
+		}else{
+			acumulador += parseInt(cadena);
+			msg = "El valor acumulado es: " + acumulador + "\n";
+		}
+	}
+	$('#resultado_for').html('El número acumulado es ' + acumulador);
+  });
+});
+
+$(function(){
+  $("#boton_while").on('click', function(){
+    var cadena = '';
+    var msg = '';
+    var acumulador=0, acabar=false;
+	while(!acabar){
+		cadena = prompt( msg + "Introduzca un numero:");
+		if(cadena === 'acabar'){
+			acabar = true;
+		}else if(isNaN(cadena)){
+			msg = "Valor incorrecto, pruebe otra vez \n";
+		}else{
+			acumulador += parseInt(cadena);
+			msg = "El valor acumulado es: " + acumulador + "\n";
+		}
+	}
+	$('#resultado_while').html('El número acumulado es ' + acumulador);
+  });
+});
+
+</script>
+
+
+</head>
+<body>
+<h3>Modulo 7 Tema 4</h3>
+<button type="button" id="boton_for"> Con Bucle For </button>
+<p><div id="resultado_for"> </div>  </p>
+<button type="button" id="boton_while"> Con Bucle While </button>
+<p><div id="resultado_while" />
+
+</body>
+</html>
