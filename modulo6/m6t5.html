@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- Realizado por Irene Diaz Valenzuela https://idiazval.neocities.org -->
+<html>
+<head>
+<meta charset="utf-8">
+<title>Modulo 6, tema 5 Ejercicio P2P Opcional</title>
+
+<script type="text/javascript">
+
+	var myVar;
+	
+	function mostrar_fecha(){
+		var cl = document.getElementById("fecha");
+		cl.innerHTML = new Date();
+	}
+	function mostrar_hora(){
+		var rlj = new Date();
+		var out = rlj.getHours() + " horas " + rlj.getMinutes() + " minutos " + rlj.getSeconds() + " segundos " + rlj.getMilliseconds() + " ms";
+		var cl = document.getElementById("fecha");
+		cl.innerHTML = out;
+	}
+	function inicializar(){
+		
+		mostrar_hora();
+	}
+
+	function stop_clock(){
+			clearInterval(myVar);
+			document.removeEventListener('click', stop_clock)
+			document.addEventListener('click', start_clock)
+		document.getElementById("st").innerHTML = "Reloj parado";
+	}
+
+	function start_clock () {
+		myVar = setInterval(function(){ mostrar_hora() }, 1);
+		document.removeEventListener('click', start_clock)
+		document.addEventListener('click', stop_clock)
+		document.getElementById("st").innerHTML = "";
+	}
+</script>
+
+
+</head>
+<body onload="inicializar()"> 
+
+<h2> Reloj </h2>
+<div id="st"></div>
+<div id="fecha"></div>
+<script type="text/javascript">
+	myVar = setInterval(mostrar_hora, 1);
+	document.addEventListener('click', stop_clock);
+</script>
+
+</body>
+</html>

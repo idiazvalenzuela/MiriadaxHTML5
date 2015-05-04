@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Realizado por Irene Diaz Valenzuela https://idiazval.neocities.org -->
+<html><head><title>Ejercicio obligatorio modulo 6</title><meta charset="UTF-8">
+<style type="text/css">
+table {
+	padding: 0px;
+	margin: 0px;
+	border-spacing: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #333;
+}
+th, td {
+	padding: 0.5em;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #333;
+}
+th {
+	background-color: #E2E2E2;
+}
+td {
+	background-color: #F0F0F0;
+}
+</style>
+</head>
+<body onload="myFunction()">
+<div id='tabla'></div>  
+<script type="text/javascript">
+	function myFunction() {
+		var out = "";
+		
+     	var prop = prompt("Introduzca una propiedad", "");
+     	if (prop != null) {
+     		
+     		try{
+     			out +="<p> Elemento solicitado: " + prop + ". </p>";
+     			out += inspeccionar(eval(prop));
+     		}catch (err){
+     			out += "<p> La propiedad " + prop + " no puede ser mostrada</p>";
+     		}
+     	}
+     	document.getElementById("tabla").innerHTML = out;
+  		
+    }
+
+    function inspeccionar(obj) {
+		var msg = "";
+		msg += "<table>";
+		msg += "<tr> <th>Propiedad </th> <th>Valor </th> </tr>"
+		for (var propiedad in obj){
+			var tipo = typeof(obj[propiedad]);
+			var valor = 'No imprimible'; 
+			if(tipo !== 'function' && tipo !== 'object'){
+				valor = obj[propiedad];
+			}
+			msg += "<tr> <td>" + propiedad + "</td> <td> "+ valor + "</td></tr>";
+		}
+		msg += "</table>";
+		return msg;
+	}
+
+</script>
+
+</body>
+</html>
