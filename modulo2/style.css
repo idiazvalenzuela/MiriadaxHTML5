@@ -1,0 +1,30 @@
+/*Realizado por Irene Diaz Valenzuela https://idiazval.neocities.org */
+body {
+	font-family: 'Arial';
+	
+}
+
+header h1{
+	font-size: large;
+}
+
+header p{
+	background-color: #f3f3f3;
+	font-size: large;
+}
+
+.contenido {
+	font-size: smaller;
+}
+
+.contenido h1{
+	font-size: large;
+}
+
+.contenido h2{
+	font-size: smaller;
+}
+
+#fecha {
+	color: #a52a2a;
+}
