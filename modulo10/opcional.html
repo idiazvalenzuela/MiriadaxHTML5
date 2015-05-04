@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ejercicio Opcional Modulo 10</title>
+  <script type="text/javascript" src="zepto.min.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="gmaps.js"></script>
+  <link rel="stylesheet" type="text/css" href="mypath.css" />
+  <script type="text/javascript">
+    var map, lat, lng;
+    var coords_array = new Array();
+    localStorage.coords_array = (localStorage.coords_array || new Array());
+
+    $(function(){
+
+      function enlazarMarcador(e){
+
+       // muestra ruta entre marcas anteriores y actuales
+        map.drawRoute({
+          origin: [lat, lng],  // origen en coordenadas anteriores
+          // destino en coordenadas del click o toque actual
+          destination: [e.latLng.lat(), e.latLng.lng()],
+          travelMode: 'driving',
+          strokeColor: '#000000',
+          strokeOpacity: 0.6,
+          strokeWeight: 5
+        });
+
+        lat = e.latLng.lat();   // guarda coords para marca siguiente
+        lng = e.latLng.lng();
+
+        coords_array.push(new Array(lat, lng));
+        localStorage.coords_array = JSON.stringify(coords_array);
+        map.addMarker({ lat: lat, lng: lng});  // pone marcador en mapa
+      };
+
+      function loadMap(){
+        var index;
+        if(localStorage.coords_array != ""){
+          coords_array = JSON.parse(localStorage.coords_array);
+            map = new GMaps({  // muestra mapa centrado en coords [lat, lng]
+              el: '#map',
+              lat: coords_array[0][0],
+              lng: coords_array[0][1],
+              click: enlazarMarcador,
+              tap: enlazarMarcador
+            });
+
+
+          for (index = 0; index < coords_array.length; index++) {
+              map.addMarker({ lat: coords_array[index][0], lng: coords_array[index][1]});
+              if(index > 0){
+                map.drawRoute({
+                  origin: [coords_array[index-1][0], coords_array[index-1][1]],  // origen en coordenadas anteriores
+                  // destino en coordenadas del click o toque actual
+                  destination: [coords_array[index][0], coords_array[index][1]],
+                  travelMode: 'driving',
+                  strokeColor: '#000000',
+                  strokeOpacity: 0.6,
+                  strokeWeight: 5
+                });
+
+              }
+          }   
+
+          lat = coords_array[coords_array.length -1][0];
+          lng = coords_array[coords_array.length -1][1];
+        }else{
+          geolocalizar();
+        }
+        
+
+      };
+
+      function geolocalizar(){
+        GMaps.geolocate({
+          success: function(position){
+            lat = position.coords.latitude;  // guarda coords en lat y lng
+            lng = position.coords.longitude;
+
+            map = new GMaps({  // muestra mapa centrado en coords [lat, lng]
+              el: '#map',
+              lat: lat,
+              lng: lng,
+              click: enlazarMarcador,
+              tap: enlazarMarcador
+            });
+            map.addMarker({ lat: lat, lng: lng});  // marcador en [lat, lng]
+            coords_array.push(new Array(lat, lng));
+          },
+          error: function(error) { alert('Geolocalización falla: '+error.message); },
+          not_supported: function(){ alert("Su navegador no soporta geolocalización"); },
+        });
+      };
+
+      function resetMap(){
+        coords_array = new Array();
+        localStorage.coords_array = new Array();
+        geolocalizar();
+      }
+
+      loadMap();
+      $("#inicializar").on('click', resetMap);
+    });
+  </script>
+</head>
+<body>
+  <h1>Geolocalización</h1><div id="reset">
+  <button type="button" id="inicializar">  inicializar </button></div>
+
+
+  <div id="map"></div>
+
+</body>
+</html>
