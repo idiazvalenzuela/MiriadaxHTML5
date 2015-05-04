@@ -1,0 +1,33 @@
+#foto {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    float:left;
+}
+
+#foto img {
+    width: 400px;
+    height: 300px;
+    margin: -5px 200px 0 -20px ;
+}
+#cv {
+	float:left;
+}
+
+header, footer {
+	display: block;
+	min-height: 10%;
+}
+
+footer{
+	font-size: smaller;
+
+}
+
+#galeria div{
+	float: left;
+}
+
+.clear{
+	clear: both;	
+}
